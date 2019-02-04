@@ -7,26 +7,23 @@ import Register from "./Register";
 const AppRouter = () => (
   <Router>
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/home/">Home</Link>
-          </li>
-          <li>
-            <Link to="/catalog/">Course Catalog</Link>
-          </li>
-          <li>
-            <Link to="/register/">Register</Link>
-          </li>
-        </ul>
-      </nav>
+      <header className="App-header">
+          <span className="left">
+            <Link className="header-link" to="/home/">Home</Link>
+            <div className="divider"/>
+            <Link className="header-link" to="/catalog/">Course Catalog</Link>
+          </span>
+          <span className="right">
+            <button>Log In</button>
+            <div className="divider"/>
+            <button>Register</button>
+          </span>
+      </header>
 
       <Route path="/register/" component={Register} />
       <Route path="/catalog/" component={Catalog} />
       <Route path="/home/" component={Home} />
       <Route path="/" exact component={Home} />
-
-
     </div>
   </Router>
 );
