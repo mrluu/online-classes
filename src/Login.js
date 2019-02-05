@@ -6,33 +6,30 @@ Modal.setAppElement(document.getElementById('root'));
 
 const initialState = {
   email1: '',
-  email2: '',
   password: '',
   error: '',
 };
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.cancel = this.cancel.bind(this);
   }
 
-  register(e) {
+  login(e) {
     e.preventDefault();
-    console.log("calling register()");
-    auth.createUserWithEmailAndPassword(this.state.email1, this.state.password)
+    auth.signInWithEmailAndPassword(this.state.email1, this.state.password)
       .then((user) => {
-        console.log("created user: " + user);
         this.setState(initialState);
         this.props.setUser(user);
         this.props.hideModalHandler();
       })
       .catch((error) => {
-        alert(error);
         console.log(error);
+        alert(error);
         this.setState({ error: error });
       });
   }
@@ -50,20 +47,12 @@ class Register extends Component {
   render() {
     return (
       <Modal isOpen={this.props.showModal}>
-        <form onSubmit={this.register}>
+        <form onSubmit={this.login}>
           <input
             type="text"
             name="email1"
             placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleChange}
-            autoComplete="username"
-          />
-          <input
-            type="text"
-            name="email2"
-            placeholder="Confirm Email"
-            value={this.state.email2}
+            value={this.state.email1}
             onChange={this.handleChange}
             autoComplete="username"
           />
@@ -73,9 +62,9 @@ class Register extends Component {
             placeholder="Password"
             value={this.state.password}
             onChange={this.handleChange}
-            autoComplete="new-password"
+            autoComplete="current-password"
           />
-          <button children="Register" />
+          <button children="Log In" />
           <button onClick={this.cancel}>Cancel</button>
         </form>
       </Modal>
@@ -83,4 +72,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default Login;
