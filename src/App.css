@@ -55,10 +55,15 @@ button {
      /*border is optional*/
      text-decoration: underline;
      cursor: pointer;
+     text-align: left;
 }
 
 .divider{
     width:25px;
     height:auto;
     display:inline-block;
+}
+
+.main-content {
+  padding: 15px 15px 15px 15px;
 }

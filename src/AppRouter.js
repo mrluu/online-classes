@@ -19,11 +19,11 @@ const AppRouter = () => (
             <button>Register</button>
           </span>
       </header>
-
-      <Route path="/register/" component={Register} />
+      <div className="main-content">
       <Route path="/catalog/" component={Catalog} />
       <Route path="/home/" component={Home} />
       <Route path="/" exact component={Home} />
+      </div>
     </div>
   </Router>
 );
