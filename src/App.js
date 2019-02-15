@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./Home";
+import MySchedule from "./MySchedule";
 import Catalog from "./Catalog";
 import Register from "./Register";
 import Login from "./Login";
@@ -67,6 +68,14 @@ class App extends Component {
                 <Link className="header-link" to="/home/">Home</Link>
                 <div className="divider"/>
                 <Link className="header-link" to="/catalog/">Course Catalog</Link>
+                {this.state.user ?
+                  <React.Fragment>
+                    <div className="divider"/>
+                    <Link className="header-link" to="/my_schedule">My Schedule</Link>
+                  </React.Fragment>
+                  :
+                  <div/>
+                }
               </span>
               <span className="right">
                 {this.state.user ?
@@ -84,9 +93,10 @@ class App extends Component {
                 }
               </span>
           </header>
-          <div className="main-content">
+          <div>
             <Route path="/catalog/" component={Catalog} />
             <Route path="/home/" component={Home} />
+            <Route path="/my_schedule" component={MySchedule} />
             <Route path="/" exact component={Home} />
             <Login
               showModal={this.state.showLoginModal}
