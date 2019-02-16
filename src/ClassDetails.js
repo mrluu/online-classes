@@ -6,6 +6,9 @@ Modal.setAppElement(document.getElementById('root'));
 class ClassDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: props.user,
+    };
     this.cancel = this.cancel.bind(this);
   }
 
@@ -19,6 +22,14 @@ class ClassDetails extends Component {
         <div>
           <p>This is the class description for {this.props.selectedClass}</p>
           <div className="btn-holder">
+            {this.state.user ?
+              <React.Fragment>
+                <button onClick={this.cancel}>Enroll</button>
+                <div className="divider"/>
+              </React.Fragment>
+              :
+              <div/>
+            }
             <button onClick={this.cancel}>Close</button>
           </div>
         </div>

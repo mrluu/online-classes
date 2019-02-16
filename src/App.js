@@ -94,7 +94,8 @@ class App extends Component {
               </span>
           </header>
           <div>
-            <Route path="/catalog/" component={Catalog} />
+            <Route path="/catalog/"
+              render={() => <Catalog user={this.state.user} />}/>
             <Route path="/home/" component={Home} />
             <Route path="/my_schedule" component={MySchedule} />
             <Route path="/" exact component={Home} />

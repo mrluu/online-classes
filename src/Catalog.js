@@ -127,6 +127,7 @@ class Catalog extends Component {
         selected_topic: null,
         selected_course: null,
         showClassDetailsModal: false,
+        user: props.user,
     };
   }
 
@@ -178,6 +179,7 @@ class Catalog extends Component {
         <CourseListingsTable topic={this.state.selected_topic}
           courseClickHandler={(course) => this.courseClickHandler(course)}/>
         <ClassDetails
+          user={this.state.user}
           selectedClass={this.state.selected_course}
           showModal={this.state.showClassDetailsModal}
           hideModalHandler={() => this.hideClassDetails()}/>
