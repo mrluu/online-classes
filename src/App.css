@@ -13,6 +13,7 @@
 
 body {
   background-color: #f2f2e8;
+
 }
 
 .left {
@@ -29,6 +30,7 @@ body {
   font-size: 25px;
   font-weight: 600;
   letter-spacing: 0.3px;
+  font-family: cursive;
 }
 
 button {
@@ -44,9 +46,14 @@ button {
   padding: 10px 6px;
 }
 
+.catalog {
+  padding-left: 15px;
+}
+
 .course-listings-table {
   text-align: left;
   border-spacing: 10px;
+  font-size: 20px;
 }
 
 .course-number-button {
@@ -73,14 +80,19 @@ form button {
   margin-top: 10px;
 }
 
-H1 {
+.page-banner {
   margin-top: 0;
   padding: 15px;
+  text-align: center;
+  font-size: 52px;
+  font-family: cursive;
+  color: #c54b0c;
 }
 
 .Home {
-  background-image: url('blended-learning-hero.jpg');
-
+  background-image: url('students.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 800px;
 }
 
@@ -108,4 +120,8 @@ input {
 .ReactModal__Overlay {
     width: 500px;
     height: 450px;
+}
+
+.topic-selector {
+  padding-bottom: 50px;
 }
