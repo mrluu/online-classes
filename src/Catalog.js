@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ClassDetails from './ClassDetails'
 import "./App.css"
 
 class TopicForm extends React.Component {
@@ -55,6 +56,7 @@ class CourseListingsTable extends Component {
     //console.log("CourseListingsTable: " + this.props.topic);
     if (this.props.topic==="art") {
       return (
+        <React.Fragment>
         <tr>
           <td>
             <button className="course-number-button"
@@ -62,6 +64,14 @@ class CourseListingsTable extends Component {
           </td>
           <td>Introduction to Drawing</td>
         </tr>
+        <tr>
+          <td>
+            <button className="course-number-button"
+              onClick={() => this.onCourseClick("ART102")}>ART 102</button>
+          </td>
+          <td>Introduction to Painting</td>
+        </tr>
+        </React.Fragment>
       );
     }
     else if (this.props.topic==="math") {
@@ -102,12 +112,6 @@ class CourseListingsTable extends Component {
   render() {
     return (
       <table className="course-listings-table">
-        <thead>
-        <tr>
-          <th>Course Number</th>
-          <th>Course Title</th>
-        </tr>
-        </thead>
         <tbody>
           {this.getCourseListings()}
         </tbody>
@@ -121,8 +125,17 @@ class Catalog extends Component {
     super(props);
     this.state = {
         selected_topic: null,
-        selected_course: null
+        selected_course: null,
+        showClassDetailsModal: false,
     };
+  }
+
+  showClassDetails() {
+    this.setState({showClassDetailsModal: true});
+  }
+
+  hideClassDetails() {
+    this.setState({showClassDetailsModal: false});
   }
 
   setSelectedTopic(topic) {
@@ -139,6 +152,7 @@ class Catalog extends Component {
     this.setState({
       selected_course: course,
     })
+    this.showClassDetails();
     //console.log("clicked course: " + course);
   }
 
@@ -163,9 +177,10 @@ class Catalog extends Component {
         <TopicForm submitHandler={(topic) => this.setSelectedTopic(topic)}/>
         <CourseListingsTable topic={this.state.selected_topic}
           courseClickHandler={(course) => this.courseClickHandler(course)}/>
-        <div className="course-desc-row">
-          {this.renderCourseDescription()}
-        </div>
+        <ClassDetails
+          selectedClass={this.state.selected_course}
+          showModal={this.state.showClassDetailsModal}
+          hideModalHandler={() => this.hideClassDetails()}/>
       </div>
     );
   }
