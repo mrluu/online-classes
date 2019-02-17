@@ -22,13 +22,16 @@ class ClassDetails extends Component {
         <div>
           <p>This is the class description for {this.props.selectedClass}</p>
           <div className="btn-holder">
-            {this.state.user ?
+            {this.props.getUser() ?
               <React.Fragment>
                 <button onClick={this.cancel}>Enroll</button>
                 <div className="divider"/>
               </React.Fragment>
               :
-              <div/>
+              <React.Fragment>
+                <div>Log in to enroll</div>
+                <div className="divider"/>
+              </React.Fragment>
             }
             <button onClick={this.cancel}>Close</button>
           </div>

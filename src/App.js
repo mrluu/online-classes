@@ -30,6 +30,10 @@ class App extends Component {
     });
   }
 
+  getUser() {
+    return this.state.user;
+  }
+
   showRegister() {
     if (!this.state.showLoginModal) {
       this.setState({showRegisterModal: true});
@@ -95,7 +99,7 @@ class App extends Component {
           </header>
           <div>
             <Route path="/catalog/"
-              render={() => <Catalog user={this.state.user} />}/>
+              render={() => <Catalog getUser={()=>this.getUser()} />}/>
             <Route path="/home/" component={Home} />
             <Route path="/my_schedule" component={MySchedule} />
             <Route path="/" exact component={Home} />
