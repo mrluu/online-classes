@@ -5,7 +5,7 @@ import MySchedule from "./MySchedule";
 import Catalog from "./Catalog";
 import Register from "./Register";
 import Login from "./Login";
-import {auth} from './firebase.js';
+import {auth, db} from './firebase.js';
 
 const initialState = {
   showRegisterModal: false,

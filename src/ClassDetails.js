@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import {auth, db} from './firebase.js';
 
 Modal.setAppElement(document.getElementById('root'));
 
 class ClassDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: props.user,
-    };
-    this.cancel = this.cancel.bind(this);
+    this.close = this.close.bind(this);
+    this.enroll = this.enroll.bind(this);
   }
 
-  cancel() {
+  close() {
     this.props.hideModalHandler();
+  }
+
+  enroll() {
+    console.log("enrolling user " + this.props.getUser().user.email + " in class " + this.props.selectedClass);
+    db.collection("student-classes").add({
+        username: this.props.getUser().user.email,
+        class_id: this.props.selectedClass,
+    })
+    .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+    this.close();
   }
 
   render() {
@@ -24,7 +38,7 @@ class ClassDetails extends Component {
           <div className="btn-holder">
             {this.props.getUser() ?
               <React.Fragment>
-                <button onClick={this.cancel}>Enroll</button>
+                <button onClick={this.enroll}>Enroll</button>
                 <div className="divider"/>
               </React.Fragment>
               :
@@ -33,7 +47,7 @@ class ClassDetails extends Component {
                 <div className="divider"/>
               </React.Fragment>
             }
-            <button onClick={this.cancel}>Close</button>
+            <button onClick={this.close}>Close</button>
           </div>
         </div>
       </Modal>
