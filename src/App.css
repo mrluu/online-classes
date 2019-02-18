@@ -30,7 +30,7 @@ body {
   font-size: 25px;
   font-weight: 600;
   letter-spacing: 0.3px;
-  font-family: cursive;
+  font-family: 'Mukta', sans-serif;
 }
 
 button {
@@ -85,7 +85,7 @@ form button {
   padding: 15px;
   text-align: center;
   font-size: 52px;
-  font-family: cursive;
+  font-family: 'Mukta', sans-serif;
   color: #c54b0c;
 }
 

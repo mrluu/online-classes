@@ -99,9 +99,10 @@ class App extends Component {
           </header>
           <div>
             <Route path="/catalog/"
-              render={() => <Catalog getUser={()=>this.getUser()} />}/>
+              render={() => <Catalog getUser={() => this.getUser()} />} />
             <Route path="/home/" component={Home} />
-            <Route path="/my_schedule" component={MySchedule} />
+            <Route path="/my_schedule" 
+              render={() => <MySchedule getUser={() => this.getUser()} />} />
             <Route path="/" exact component={Home} />
             <Login
               showModal={this.state.showLoginModal}
