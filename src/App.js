@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Router, Route, Link } from "react-router-dom";
+import { createBrowserHistory } from 'history';
 import Home from "./Home";
 import MySchedule from "./MySchedule";
 import Catalog from "./Catalog";
 import Register from "./Register";
 import Login from "./Login";
 import {auth, db} from './firebase.js';
+
+const history = createBrowserHistory();
 
 const initialState = {
   showRegisterModal: false,
@@ -61,11 +64,12 @@ class App extends Component {
           user: null
         });
       });
+    history.push("/");
   }
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <header className="App-header">
               <span className="left">
@@ -101,13 +105,14 @@ class App extends Component {
             <Route path="/catalog/"
               render={() => <Catalog getUser={() => this.getUser()} />} />
             <Route path="/home/" component={Home} />
-            <Route path="/my_schedule" 
+            <Route path="/my_schedule"
               render={() => <MySchedule getUser={() => this.getUser()} />} />
             <Route path="/" exact component={Home} />
             <Login
               showModal={this.state.showLoginModal}
               hideModalHandler={() => this.hideLogin()}
               setUser={(user) => this.setUser(user)}
+              history={history}
             />
             <Register
               showModal={this.state.showRegisterModal}

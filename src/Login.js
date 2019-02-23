@@ -26,6 +26,7 @@ class Login extends Component {
         this.setState(initialState);
         this.props.setUser(user);
         this.props.hideModalHandler();
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error);

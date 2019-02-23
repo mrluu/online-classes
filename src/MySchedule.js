@@ -42,7 +42,11 @@ class MySchedule extends Component {
     let listOfClasses = [];
     for (let theClass of this.state.myClasses) {
       console.log("class ID: " + theClass);
-      listOfClasses.push(<p key={theClass.class_id}>Class: {theClass.class_id}</p>);
+      listOfClasses.push(
+        <li key={theClass.class_id}>
+          <h3>{theClass.class_id}</h3>
+        </li>
+      );
     }
     return listOfClasses;
   }
@@ -51,9 +55,9 @@ class MySchedule extends Component {
     console.log("RENDER");
     if (this.props.getUser()) {
       return (
-        <div>
+        <ul>
           {this.listClasses()}
-        </div>
+        </ul>
       );
     }
     else {
