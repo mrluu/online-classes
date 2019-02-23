@@ -1,76 +1,65 @@
 import React, { Component } from 'react';
-import {auth, db} from "./firebase";
+import firebase, {auth, db} from "./firebase";
 
 class MySchedule extends Component {
-
-  refreshItems() {
-    const itemsRef = firebase.database().ref('items');
-    itemsRef.on('value', (snapshot) => {
-      let items = snapshot.val();
-      let newState = [];
-      for (let item in items) {
-        newState.push({
-          id: item,
-          title: items[item].title,
-          user: items[item].user
-        });
-      }
-      this.setState({
-        items: newState
-      });
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+        myClasses: [],
+    };
   }
 
   componentDidMount() {
+    console.log("component did mount");
     this.refreshItems();
-
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ user });
-      }
-    });
   }
 
-  render() {
+  refreshItems() {
+    console.log("refresh items 1");
     if (this.props.getUser()) {
       var ref = db.collection("student-classes");
       var query = ref.where("username", "==", this.props.getUser().user.email);
-      console.log("about to execute query");
-      var enrolledClasses;
+      console.log("2. about to execute query");
+      let enrolledClasses = [];
       query.get().then((results) => {
-        if(results.empty) {
-          console.log("No documents found!");
-          return (
-            <div className="MySchedule">
-              <p>You are not enrolled in any classes</p>
-            </div>
-          );
-        }
-        else {
-          console.log("DOCS: " + results.size + results.docs);
+        if (results.size > 0) {
+          console.log("3. DOCS: " + results.size + results.docs);
           //console.log("Document data:", doc.data().class_id + " " + doc.data().username);
-          enrolledClasses = results.docs.map((doc) => {
-            console.log("Class: " + doc.data().class_id);
-            return (
-              <p>
-                {doc.data().class_id}
-              </p>
-            );
+          results.docs.map((doc) => {
+            console.log("4. Class: " + doc.data().class_id);
+            enrolledClasses.push({class_id: doc.data().class_id});
           });
-          //console.log("ENROLLED CLASSES: " + enrolledClasses);
+
+          console.log("refresh items 5");
+          this.setState({myClasses: enrolledClasses});
+          console.log("refresh items 6");
         }
       });
-      console.log("ENROLLED CLASSES: " + enrolledClasses);
+    }
+  }
+
+  listClasses() {
+    let listOfClasses = [];
+    for (let theClass of this.state.myClasses) {
+      console.log("class ID: " + theClass);
+      listOfClasses.push(<p key={theClass.class_id}>Class: {theClass.class_id}</p>);
+    }
+    return listOfClasses;
+  }
+
+  render() {
+    console.log("RENDER");
+    if (this.props.getUser()) {
       return (
-        <React.Fragment>
-        <h1>Enrolled Classes</h1>
-        <div>{enrolledClasses}</div>
-        </React.Fragment>
+        <div>
+          {this.listClasses()}
+        </div>
       );
     }
     else {
-      console.log("Not logged in");
-      return (<div/>);
+      return (
+        <p>Log in to see your classes</p>
+      );
     }
   }
 }
