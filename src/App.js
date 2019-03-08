@@ -25,6 +25,15 @@ class App extends Component {
     this.showLogin = this.showLogin.bind(this);
     this.hideLogin = this.hideLogin.bind(this);
     this.logout = this.logout.bind(this);
+    this.getUser = this.getUser.bind(this);
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({user: user});
+      }
+    });
   }
 
   setUser(user) {
@@ -88,7 +97,7 @@ class App extends Component {
               <span className="right">
                 {this.state.user ?
                   <div>
-                    <p className="username">{this.state.user.user.email}</p>
+                    <p className="username">{this.state.user.email}</p>
                     <div className="divider"/>
                     <button onClick={this.logout}>Log Out</button>
                   </div>

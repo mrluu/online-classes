@@ -18,7 +18,7 @@ class MySchedule extends Component {
     console.log("refresh items 1");
     if (this.props.getUser()) {
       var ref = db.collection("student-classes");
-      var query = ref.where("username", "==", this.props.getUser().user.email);
+      var query = ref.where("username", "==", this.props.getUser().email);
       console.log("2. about to execute query");
       let enrolledClasses = [];
       query.get().then((results) => {
@@ -40,13 +40,15 @@ class MySchedule extends Component {
 
   listClasses() {
     let listOfClasses = [];
+    let id = 0;
     for (let theClass of this.state.myClasses) {
       console.log("class ID: " + theClass);
       listOfClasses.push(
-        <li key={theClass.class_id}>
+        <li key={id}>
           <h3>{theClass.class_id}</h3>
         </li>
       );
+      id++;
     }
     return listOfClasses;
   }
