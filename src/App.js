@@ -21,11 +21,8 @@ class App extends Component {
     super();
     this.state = initialState;
     this.showRegister = this.showRegister.bind(this);
-    this.hideRegister = this.hideRegister.bind(this);
     this.showLogin = this.showLogin.bind(this);
-    this.hideLogin = this.hideLogin.bind(this);
     this.logout = this.logout.bind(this);
-    this.getUser = this.getUser.bind(this);
   }
 
   componentDidMount() {

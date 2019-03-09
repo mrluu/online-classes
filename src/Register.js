@@ -22,10 +22,8 @@ class Register extends Component {
 
   register(e) {
     e.preventDefault();
-    console.log("calling register()");
     auth.createUserWithEmailAndPassword(this.state.email1, this.state.password)
       .then((user) => {
-        console.log("created user: " + user);
         this.setState(initialState);
         this.props.setUser(user);
         this.props.hideModalHandler();

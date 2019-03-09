@@ -80,17 +80,24 @@ form button {
   margin-top: 10px;
 }
 
-.page-banner {
+.home-page-banner {
   margin-top: 0;
   padding: 15px;
   text-align: center;
+  font-size: 72px;
+  font-family: 'Mukta', sans-serif;
+}
+
+.page-banner {
+  margin-top: 0;
+  text-align: center;
   font-size: 52px;
   font-family: 'Mukta', sans-serif;
-  color: #c54b0c;
+
 }
 
 .Home {
-  background-image: url('students.jpg');
+  background-image: url('classroom.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 800px;
@@ -120,6 +127,7 @@ input {
 .classDetailsDialog {
   flex-direction: column;
   display: flex;
+  height: 450px;
 }
 
 .btn-holder {
