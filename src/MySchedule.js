@@ -48,14 +48,42 @@ class MySchedule extends Component {
   }
 
   listClasses() {
+    const liStyle = {
+      width: "40%",
+      listStyleType: "none",
+      marginRight: "55px",
+      marginLeft: "15px",
+      marginTop: "15px",
+      backgroundColor: "rgb(237, 237, 237)",
+      color: "#000",
+      marginBottom: "40px",
+      boxShadow: "0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.12), 0 1px 8px 0 rgba(0,0,0,.2)"
+    };
+
+    const headingStyle = {
+      backgroundColor: "#57575c",
+      color: "white",
+      height: "25%",
+      fontSize: "22px",
+      fontFamily: "'Mukta', sans-serif",
+      textAlign: "center"
+    };
+
+    const bodyStyle = {
+      padding: "10px",
+    };
+
     let listOfClasses = [];
     let id = 0;
     for (let theClass of this.state.myClasses) {
       console.log("class ID: " + theClass);
       listOfClasses.push(
-        <li key={theClass.record_id}>
-          <h3>{theClass.class_id}</h3>
-          <button onClick={() => {this.removeClass(theClass.record_id)}}>Remove</button>
+        <li style={liStyle} key={theClass.record_id}>
+          <div style={headingStyle}>{theClass.class_id}</div>
+          <div style={bodyStyle}>
+            <p>Title goes here ...</p>
+            <button onClick={() => {this.removeClass(theClass.record_id)}}>Remove</button>
+          </div>
         </li>
       );
       id++;
@@ -64,9 +92,16 @@ class MySchedule extends Component {
   }
 
   render() {
+    const ulStyle = {
+      display: "flex",
+      flexWrap: "wrap",
+      marginLeft: "70px",
+      padding: "50"
+    };
+
     if (this.props.getUser()) {
       return (
-        <ul>
+        <ul style={ulStyle}>
           {this.listClasses()}
         </ul>
       );
