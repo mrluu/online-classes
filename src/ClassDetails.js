@@ -16,9 +16,9 @@ class ClassDetails extends Component {
   }
 
   enroll() {
-    console.log("enrolling user " + this.props.getUser().user.email + " in class " + this.props.selectedClass);
+    console.log("enrolling user " + this.props.getUser().email + " in class " + this.props.selectedClass);
     db.collection("student-classes").add({
-        username: this.props.getUser().user.email,
+        username: this.props.getUser().email,
         class_id: this.props.selectedClass,
     })
     .then(function(docRef) {

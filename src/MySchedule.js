@@ -17,25 +17,34 @@ class MySchedule extends Component {
   refreshItems() {
     console.log("refresh items 1");
     if (this.props.getUser()) {
-      var ref = db.collection("student-classes");
-      var query = ref.where("username", "==", this.props.getUser().email);
-      console.log("2. about to execute query");
+      var collectionRef = db.collection("student-classes");
+      var query = collectionRef.where("username", "==", this.props.getUser().email);
       let enrolledClasses = [];
       query.get().then((results) => {
+        //results is a QuerySnapshot
         if (results.size > 0) {
-          console.log("3. DOCS: " + results.size + results.docs);
-          //console.log("Document data:", doc.data().class_id + " " + doc.data().username);
+          //results.docs is an array of QueryDocumentSnapshot
+          console.log("refresh items 2. DOCS: " + results.size + results.docs);
           results.docs.map((doc) => {
-            console.log("4. Class: " + doc.data().class_id);
-            enrolledClasses.push({class_id: doc.data().class_id});
+            console.log("refresh items 3. Class: " + doc.data().class_id + " ID: " + doc.id);
+            enrolledClasses.push({
+              class_id: doc.data().class_id,
+              record_id: doc.id,
+            });
           });
-
-          console.log("refresh items 5");
-          this.setState({myClasses: enrolledClasses});
-          console.log("refresh items 6");
         }
+        this.setState({myClasses: enrolledClasses});
       });
     }
+  }
+
+  removeClass(record_id) {
+    db.collection("student-classes").doc(record_id).delete().then(() => {
+        console.log("REMOVED: " + record_id);
+        this.refreshItems();
+    }).catch(function(error) {
+        console.error("Error removing document: " + record_id, error);
+    });
   }
 
   listClasses() {
@@ -44,8 +53,9 @@ class MySchedule extends Component {
     for (let theClass of this.state.myClasses) {
       console.log("class ID: " + theClass);
       listOfClasses.push(
-        <li key={id}>
+        <li key={theClass.record_id}>
           <h3>{theClass.class_id}</h3>
+          <button onClick={() => {this.removeClass(theClass.record_id)}}>Remove</button>
         </li>
       );
       id++;
@@ -54,7 +64,6 @@ class MySchedule extends Component {
   }
 
   render() {
-    console.log("RENDER");
     if (this.props.getUser()) {
       return (
         <ul>
