@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase, {auth, db} from "./firebase";
 import ClassDetails from './ClassDetails'
 import CourseListingsTable from './CourseListingsTable'
 import "./App.css"
@@ -11,7 +12,7 @@ class TopicForm extends React.Component {
   }
 
   handleChange(event) {
-    //console.log("handleChange " + event.target.value);
+    //console.log("TopicForm.handleChange " + event.target.value);
     this.setState({value: event.target.value});
     this.props.submitHandler(event.target.value);
   }
@@ -49,6 +50,7 @@ class Catalog extends Component {
         selected_topic: null,
         selected_course: null,
         showClassDetailsModal: false,
+        classesForTopic: [],
     };
   }
 
@@ -61,6 +63,8 @@ class Catalog extends Component {
   }
 
   setSelectedTopic(topic) {
+    //console.log("Catalog.setSelectedTopic() " + topic);
+    this.getClassesForTopic(topic);
     this.setState({
       selected_topic: topic,
       selected_course: null
@@ -74,25 +78,41 @@ class Catalog extends Component {
     this.showClassDetails();
   }
 
-  renderCourseDescription() {
-    const descStyle = {
-      paddingLeft: "10px",
-      paddingTop: "20px",
-    };
-
-    if (this.state.selected_course) {
-      return (
-        <div style={descStyle}>This is the description for {this.state.selected_course}</div>
-      );
+  getClassesForTopic(topic) {
+    //console.log("Catalog.getClassesForTopic() " + topic);
+    if (topic) {
+      var collectionRef = db.collection("classes");
+      var query = collectionRef.where("topic", "==", topic);
+      let matchingClasses = [];
+      query.get().then((results) => {
+        //results is a QuerySnapshot
+        if (results.size > 0) {
+          //results.docs is an array of QueryDocumentSnapshot
+          //console.log("getClassesForTopic 2. DOCS: " + results.size + results.docs);
+          results.docs.map((doc) => {
+            //console.log("getClassesForTopics 3. Class: " + doc.data().class_id + " ID: " + doc.id);
+            matchingClasses.push({
+              class_id: doc.data().class_id,
+              description: doc.data().description,
+              name: doc.data().name,
+              short_summary: doc.data().short_summary,
+              teacher: doc.data().teacher,
+              record_id: doc.id,
+            });
+          });
+        }
+        this.setState({classesForTopic: matchingClasses});
+      });
     }
   }
 
   render() {
+    //console.log("Catalog.render() " + this.state.selected_topic);
     return (
       <div className="catalog">
         <div className="page-banner"> Course Catalog </div>
         <TopicForm submitHandler={(topic) => this.setSelectedTopic(topic)}/>
-        <CourseListingsTable topic={this.state.selected_topic}
+        <CourseListingsTable classesForTopic={this.state.classesForTopic}
           courseClickHandler={(course) => this.courseClickHandler(course)}/>
         <ClassDetails
           getUser={()=>this.props.getUser()}

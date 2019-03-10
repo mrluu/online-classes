@@ -4,11 +4,39 @@ import "./App.css"
 class CourseListingsTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {topic: null};
+    this.state = {
+      topic: null,
+    };
   }
 
   onCourseClick(course) {
     this.props.courseClickHandler(course);
+  }
+
+  renderClassListings() {
+    let listOfClasses = [];
+    for (let theClass of this.props.classesForTopic) {
+      listOfClasses.push(
+        <tr key={theClass.record_id}>
+          <td>
+          <button className="course-number-button"
+            onClick={() => this.onCourseClick(theClass)}>{theClass.name}</button>
+          </td>
+          <td>{theClass.short_summary} </td>
+        </tr>
+      );
+    }
+    return listOfClasses;
+  }
+
+  render() {
+    return (
+      <table>
+        <tbody>
+          {this.renderClassListings()}
+        </tbody>
+      </table>
+    );
   }
 
   getCourseListings() {
@@ -66,16 +94,6 @@ class CourseListingsTable extends Component {
         </tr>
       );
     }
-  }
-
-  render() {
-    return (
-      <table className="course-listings-table">
-        <tbody>
-          {this.getCourseListings()}
-        </tbody>
-      </table>
-    );
   }
 }
 

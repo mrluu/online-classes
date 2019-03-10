@@ -16,10 +16,10 @@ class ClassDetails extends Component {
   }
 
   enroll() {
-    console.log("enrolling user " + this.props.getUser().email + " in class " + this.props.selectedClass);
+    console.log("enrolling user " + this.props.getUser().email + " in class " + this.props.selectedClass.class_id);
     db.collection("student-classes").add({
         username: this.props.getUser().email,
-        class_id: this.props.selectedClass,
+        class_id: this.props.selectedClass.class_id,
     })
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
@@ -34,21 +34,32 @@ class ClassDetails extends Component {
     return (
       <Modal overlayClassName='classDetailsDialog' isOpen={this.props.showModal}>
         <div>
-          <p>This is the class description for {this.props.selectedClass}</p>
-          <div className="btn-holder">
-            {this.props.getUser() ?
-              <React.Fragment>
-                <button onClick={this.enroll}>Enroll</button>
-                <div className="divider"/>
-              </React.Fragment>
-              :
-              <React.Fragment>
-                <div>Log in to enroll</div>
-                <div className="divider"/>
-              </React.Fragment>
-            }
-            <button onClick={this.close}>Close</button>
-          </div>
+          {this.props.selectedClass ?
+            <React.Fragment>
+              <h2>
+                {this.props.selectedClass.name}: &nbsp;
+                {this.props.selectedClass.short_summary}
+              </h2>
+              <b>Instructor: {this.props.selectedClass.teacher}</b>
+              <p>{this.props.selectedClass.description}</p>
+              <div className="btn-holder">
+                {this.props.getUser() ?
+                  <React.Fragment>
+                    <button onClick={this.enroll}>Enroll</button>
+                    <div className="divider"/>
+                  </React.Fragment>
+                  :
+                  <React.Fragment>
+                    <div>Log in to enroll</div>
+                    <div className="divider"/>
+                  </React.Fragment>
+                }
+                <button onClick={this.close}>Close</button>
+              </div>
+            </React.Fragment>
+            :
+            <React.Fragment><div></div></React.Fragment>
+          }
         </div>
       </Modal>
     );
