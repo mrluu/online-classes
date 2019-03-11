@@ -20,6 +20,8 @@ class TopicForm extends React.Component {
   render() {
     const labelStyle = {
       "fontSize": "32px",
+      color: "white",
+      textAlign: "center",
     };
 
     const selectStyle = {

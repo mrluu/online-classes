@@ -14,28 +14,59 @@ class CourseListingsTable extends Component {
   }
 
   renderClassListings() {
+    const liStyle = {
+      width: "40%",
+      listStyleType: "none",
+      marginRight: "55px",
+      marginLeft: "15px",
+      marginTop: "15px",
+      backgroundColor: "rgb(237, 237, 237)",
+      color: "#000",
+      marginBottom: "40px",
+      boxShadow: "0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.12), 0 1px 8px 0 rgba(0,0,0,.2)"
+    };
+
+    const headingStyle = {
+      backgroundColor: "#fa6900",
+      color: "white",
+      height: "25%",
+      fontSize: "22px",
+      fontFamily: "'Mukta', sans-serif",
+      textAlign: "center"
+    };
+
+    const bodyStyle = {
+      padding: "10px",
+    };
+
     let listOfClasses = [];
     for (let theClass of this.props.classesForTopic) {
       listOfClasses.push(
-        <tr key={theClass.record_id}>
-          <td>
-          <button className="course-number-button"
-            onClick={() => this.onCourseClick(theClass)}>{theClass.name}</button>
-          </td>
-          <td>{theClass.short_summary} </td>
-        </tr>
+        <li style={liStyle} key={theClass.record_id}>
+          <div style={headingStyle}>{theClass.class_id}</div>
+          <div style={bodyStyle}>
+            <p>{theClass.short_summary}</p>
+            <button className="course-number-button"
+              onClick={() => this.onCourseClick(theClass)}>Details ...</button>
+          </div>
+        </li>
       );
     }
     return listOfClasses;
   }
 
   render() {
+    const ulStyle = {
+      display: "flex",
+      flexWrap: "wrap",
+      marginLeft: "70px",
+      padding: "50"
+    };
+
     return (
-      <table>
-        <tbody>
-          {this.renderClassListings()}
-        </tbody>
-      </table>
+      <ul style={ulStyle}>
+        {this.renderClassListings()}
+      </ul>
     );
   }
 

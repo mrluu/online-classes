@@ -48,6 +48,10 @@ button {
 
 .catalog {
   padding-left: 15px;
+  background-image: url('book-shelves.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 800px;
 }
 
 .course-listings-table {
@@ -63,10 +67,14 @@ button {
      padding:0!important;
      box-shadow: none;
      font: inherit;
-     /*border is optional*/
-     text-decoration: underline;
+     font-style: italic;
      cursor: pointer;
      text-align: left;
+}
+
+.course-number-button:hover {
+  color: blue;
+  text-decoration: underline;
 }
 
 .divider{
@@ -92,6 +100,7 @@ form button {
   margin-top: 0;
   text-align: center;
   font-size: 52px;
+  color: white;
   font-family: 'Mukta', sans-serif;
 
 }
@@ -142,4 +151,5 @@ input {
 
 .topic-selector {
   padding-bottom: 50px;
+  text-align: center;
 }
